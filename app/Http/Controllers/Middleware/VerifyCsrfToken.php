@@ -1,5 +1,5 @@
 
 
-protected $except = [
+<!-- protected $except = [
     '/student',
-];
+]; -->

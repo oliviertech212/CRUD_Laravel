@@ -14,11 +14,11 @@ class StudentController extends Controller
 
         $student =Student::all();
 
-        echo($student);
+        // echo($student);
 
 
         return response()->json([
-            'status' => 'success',
+            'status' =>200,
             'message' => 'Student data retrieved successfully.',
             'data' => $student
         ], 200);
@@ -60,6 +60,7 @@ class StudentController extends Controller
                 'status' => 'success',
                 'message' => 'Student data saved successfully.',
                 'data' => $student
+                
             ], 201);
         }
       
