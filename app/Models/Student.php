@@ -9,6 +9,10 @@ class Student extends Model
 {
     use HasFactory;
 
+    public function address(){
+        return $this->belongsTo(Address::class);
+    }
+
     protected $fillable = [
         'name',
         'email',
