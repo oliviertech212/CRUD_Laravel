@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\StudentController; 
 
+use App\Http\Controllers\StudentAddressController;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -20,3 +22,10 @@ Route::get('/csrf-token', function () {
 })->name('csrf-token');
 
 Route::post('/student',[StudentController::class, 'create']);
+
+
+
+Route::get('/student-address', [StudentAddressController::class, 'getAllAddress']);
+// create student address
+
+Route::post('/student/address', [StudentAddressController::class, 'createAddress']);

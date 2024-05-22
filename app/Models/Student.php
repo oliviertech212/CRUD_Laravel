@@ -10,13 +10,14 @@ class Student extends Model
     use HasFactory;
 
     public function address(){
-        return $this->belongsTo(Address::class);
+        return $this->belongsTo(StudentAddress::class, 'student_address_id');
     }
 
     protected $fillable = [
         'name',
         'email',
         'phone',
-        'address',
+        'student_address_id'
+       
     ];
 }

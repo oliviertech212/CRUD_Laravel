@@ -9,15 +9,16 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
-            $table->string('email')->unique();
-            $table->string('phone')->nullable();
-            $table->string('address')->nullable();
-            $table->timestamps()->default = DB::raw('CURRENT_TIMESTAMP');
+            $table->timestamps();
+            $table->string('name')->after('id');
+            $table->string('email')->after('name');
+            $table->string('phone')->after('emial');
+            $table->timestamps();
+        
         });
     }
 

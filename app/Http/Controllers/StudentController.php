@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
+use App\Models\StudentAddress;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -14,7 +15,7 @@ class StudentController extends Controller
 
         $student =Student::all();
 
-        // echo($student);
+        echo($student);
 
 
         return response()->json([
@@ -29,14 +30,31 @@ class StudentController extends Controller
 
        
 
-    
+      print("create student");
        try {
         $student = new Student();
+
+        // check if rquest student address exists
+        if($request->address_id){
+            $address = StudentAddress::find($request->address_id);
+            if(!$address){
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Address not found.',
+                    'data' => null
+                ], 404);
+            }
+        }
+
+
+
+
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'requi red|email',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email',
             'phone' => 'required',
-            'address' => 'required',
+            'address_id' => 'required|exists:studentaddresses,id'
+          
         ]);
 
 
@@ -49,11 +67,12 @@ class StudentController extends Controller
             ], 400);
 
         }
+    
         else{
             $student->name = $request->name;
             $student->email = $request->email;
             $student->phone = $request->phone;
-            $student->address = $request->address;
+            $student->student_address_id = $request->address_id;
             $student->save();
 
             return response()->json([
@@ -63,8 +82,24 @@ class StudentController extends Controller
                 
             ], 201);
         }
+
+
+        // $student = Student::create([
+        //     'name' => $request->name,
+        //     'email' => $request->email,
+        //     'phone' => $request->phone,
+        //     'student_address_id' => $request->address_id
+        // ]);
+
+        // return response()->json([
+        //     'status' => 'success',
+        //     'message' => 'Student data saved successfully.',
+        //     'data' => $student
+        // ], 201);
       
-       } catch (\Exception $e) {
+       } catch (Exception $e) {
+        print("error on create student ");
+        print($e->getMessage());
         return response()->json(['error' => $e->getMessage()], 500);
     }
 
