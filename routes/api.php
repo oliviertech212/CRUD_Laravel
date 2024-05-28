@@ -3,6 +3,7 @@
 
 
 <?php
+use App\Http\Controllers\usersController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController; 
 use App\Http\Controllers\StudentAddressController;
@@ -36,3 +37,8 @@ Route::post('/update/{id}',[StudentAddressController::class, 'updateAddress']);
 
 
 
+// Authentication and authorization routes
+Route::post('/register', [usersController::class, 'createAccount']);
+Route::get('/users', [usersController::class, 'getAllusers'])->middleware('auth:sanctum');
+Route::post('/login', [usersController::class, 'Login']);
+Route::post('/logout',[usersController::class,'Logout'])->middleware('auth:sanctum');
