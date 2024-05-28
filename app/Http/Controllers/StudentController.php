@@ -14,10 +14,6 @@ class StudentController extends Controller
         // return "Hello, I'm a student from the University of Rwanda.";
 
         $student =Student::all();
-
-        echo($student);
-
-
         return response()->json([
             'status' =>200,
             'message' => 'Student data retrieved successfully.',

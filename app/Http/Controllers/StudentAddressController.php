@@ -27,7 +27,7 @@ class StudentAddressController extends Controller
 
         echo("create student address");
 
-
+        $adress = new StudentAddress();
 
         $createAdrress = StudentAddress::create([
           'postalCode' => $request->postalCode,
@@ -43,5 +43,36 @@ class StudentAddressController extends Controller
                 'data' => $createAdrress
             ], 200);
         }
+    }
+
+
+    public function deleteAddress($id){
+    
+        $address = StudentAddress::find($id);
+
+        if(!$address)
+        {
+            return response()->json([
+                'status' => 404,
+                'message' => 'Address not found'
+            ], 404);
+        }
+    
+        $address->delete();
+    
+        return response()->json([
+            'status' => 200,
+            'message' => 'Address deleted successfully'
+        ], 200); 
+    }
+
+
+    public function updateAddress(Request $request)
+    {
+        $address = StudentAddress::find($request->id);
+        $address->update([
+'postalcode' => $request->postalCode,
+
+        ]);
     }
 }
